@@ -1,0 +1,8 @@
+.App-RegisterDialog__photoBlock {
+    display:flex;
+    justify-content: center;
+}
+
+.App-RegisterDialog__photoBlock {
+    padding: 10px;
+}
