@@ -1,0 +1,14 @@
+.App-uiBlock__PersonProfile-ava {
+    width: 200px !important;
+    height: 200px !important;
+}
+
+.App-uiBlock__PersonProfile-Container {
+    padding: 12px;
+}
+
+.App-uiBlock__PersonProfile-NameBlock {
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+}

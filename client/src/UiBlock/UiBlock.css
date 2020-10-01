@@ -9,6 +9,7 @@
     margin-bottom: 5px;
 }
 
-.App-uiBlock div {
+.App-uiBlock__mainButton {
+    position: absolute;
     margin: auto;
 }
