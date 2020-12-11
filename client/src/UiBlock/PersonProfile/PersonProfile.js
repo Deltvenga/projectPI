@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
 import Avatar from "@material-ui/core/Avatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from '@material-ui/lab/Alert';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Container} from "@material-ui/core";
 import './PersonProfile.css';

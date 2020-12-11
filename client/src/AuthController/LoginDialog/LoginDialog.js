@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 import TextField from "@material-ui/core/TextField";
 
 export class LoginDialog extends Component {

@@ -1,15 +1,7 @@
 import React, {Component} from 'react';
-import Avatar from "@material-ui/core/Avatar";
 import './FriendsList.css';
-import {Button} from "@material-ui/core";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import FriendItem from "./FriendItem/FriendItem";
 
 

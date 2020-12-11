@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Map, GoogleApiWrapper, InfoWindow, Marker} from 'google-maps-react';
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 
 export class MapContainer extends Component {
     constructor(props) {

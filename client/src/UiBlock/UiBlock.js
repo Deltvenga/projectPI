@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
 import './UiBlock.css';
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
