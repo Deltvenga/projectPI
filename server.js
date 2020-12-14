@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const allowCors = require('./config/cors');
 
 const PORT = process.env.PORT || 3001;
 
@@ -7,7 +8,7 @@ const app = new express();
 
 async function start() {
     try {
-        await mongoose.connect('mongodb+srv://admin:'+process.env.dbAdmin+'@cluster0.dkanu.mongodb.net/users', {
+        await mongoose.connect('mongodb+srv://admin:lazeradmin@cluster0.dkanu.mongodb.net/moneyKeeper', {
             useNewUrlParser: true,
             useFindAndModify:false,
             useUnifiedTopology: true
@@ -19,6 +20,7 @@ async function start() {
         console.log(error);
     }
 }
+//app.use(allowCors);
 app.use('/', require('./routes/users'));
 
 start();
