@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
+import {Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 
 export class MapContainer extends Component {
     constructor(props) {
@@ -16,9 +16,15 @@ export class MapContainer extends Component {
             activeMarker: marker,
             showingInfoWindow: true
         });
+    styles = {
+        infoWindow: {
+            height: 100,
+            width: 100,
+            color: 'red'
+        }
+    }
 
     render() {
-
         return (
             <Map
                 google={window.google}
@@ -31,9 +37,23 @@ export class MapContainer extends Component {
                 }
             >
                 <Marker
-                    position={{ lat: 57.1531181, lng: 65.5689476 }}
+                    title={'Ваше местоположение'}
+                    name={'curPos'}
+                    id={1}
+                    position={this.props.curPos || {
+                        lat: 57.2531181,
+                        lng: 65.6689476
+                    }}
                 >
-                    <div>test</div>
+                    <InfoWindow
+                        visible={true}
+
+                        style={this.styles.infoWindow}
+                    >
+                        <div>
+                            <p>Click on the map or drag the marker to select location where the incident occurred</p>
+                        </div>
+                    </InfoWindow>
                 </Marker>
             </Map>
         );

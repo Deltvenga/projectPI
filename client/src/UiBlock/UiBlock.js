@@ -46,7 +46,7 @@ export class UiBlock extends Component {
         this.setState({ isMenuBarOpen: !this.state.isMenuBarOpen });
     };
 
-    handleMenuClick = () => (type) => {
+    handleMenuClick = () => (event, type) => {
         if(type === 'AddFriend') {
             console.log(true);
             this.setState({openFriendAddingDialog: true})
@@ -54,6 +54,15 @@ export class UiBlock extends Component {
         if(type === 'MyProfile') {
             this.setState({personProfileOpen: true});
         }
+    }
+
+
+    updateLocationHandler() {
+        const self = this;
+        navigator.geolocation.getCurrentPosition((position) => {
+            self.setState({curPos: {lat: position.coords.latitude, lng: position.coords.longitude }});
+            this.props.updatePosition(this.state.curPos);
+        });
     }
 
     render() {
@@ -89,17 +98,17 @@ export class UiBlock extends Component {
                                 </ListItemIcon>
                                 <ListItemText primary="Добавить друга" />
                             </ListItem>
-                            <ListItem button onClick={this.handleMenuClick('FindFriends')}>
+                            <ListItem button onClick={() => {this.handleMenuClick('FindFriends')}}>
                                 <ListItemIcon>
                                     <SearchIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Найти друзей" />
                             </ListItem>
-                            <ListItem button onClick={this.handleMenuClick('UpdateLocation')}>
+                            <ListItem button onClick={() => {this.updateLocationHandler()}}>
                                 <ListItemIcon>
                                     <AutorenewIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Обновить мое местоположение" />
+                                <ListItemText primary='Обновить мое местоположение' />
                             </ListItem>
                             <ListItem button onClick={() => {this.setState({personProfileOpen: true})}}>
                                 <ListItemIcon>
