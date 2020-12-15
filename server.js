@@ -19,7 +19,6 @@ async function start() {
         console.log(error);
     }
 }
-//app.use(allowCors);
-app.use('/', require('./routes/users'));
+app.use('/', require('./routes/Users'));
 
 start();
