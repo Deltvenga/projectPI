@@ -19,6 +19,6 @@ async function start() {
         console.log(error);
     }
 }
-app.use('/', require('./routes/Users'));
+app.use('/', require('../../routes/Users'));
 
 start();
