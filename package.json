@@ -8,7 +8,8 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "npm start server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "npm install && cd client && npm install"
   },
   "repository": {
     "type": "git",
