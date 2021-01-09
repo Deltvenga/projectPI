@@ -19,6 +19,7 @@ async function start() {
         console.log(error);
     }
 }
+app.use(express.urlencoded({ extended: true }));
 app.use('/', require('./routes/Users'));
 
 start();
