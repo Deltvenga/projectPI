@@ -22,13 +22,18 @@ router.post('/createUser',async (req, res) => {
    const newUser = new user({
        name: req.body.userName,
        password: req.body.userPassword,
-       marks: req.body.userMarks
    });
    await newUser.save();
    res.redirect('/')
 });
 
-
+router.post('/insertMark', (req, res) => {
+    user.update({
+        _id: req.body.userId
+    }, {
+        marks: req.body.userMarks
+    });
+});
 
 
 module.exports = router;
