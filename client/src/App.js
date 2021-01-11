@@ -21,6 +21,7 @@ export class App extends Component {
                 lat: 56.2531189,
                 lng: 64.6689470
             },
+            curClickPos: {},
             userInfo: {}
         }
     }
@@ -48,16 +49,25 @@ export class App extends Component {
         })
     }
 
+    addUserMark(newMark) {
+        var newUserInfoState = this.state.userInfo;
+        newUserInfoState.marks.push(newMark)
+        this.setState({userInfo: Object.assign({}, newUserInfoState)});
+    }
+
     render() {
         return (
             <div className="App-mapBlock">
                 <MapBlock
                     userMarks={this.state.userInfo.marks || []}
                     curPos={this.state.curPos}
+                    setCurrentClickCoords={(pos) => {this.setState({curClickPos: pos})}}
                 />
                 <UiBlock
                     updatePosition={(newPos) => {this.updatePosition(newPos)}}
-                    userMarks={this.state.userInfo.marks || []}
+                    addUserMark={(newMark) => {this.addUserMark(newMark)}}
+                    userMarks={this.state.userInfo.marks}
+                    curClickCoords={this.state.curClickPos}
                 />
                 <AuthController />
             </div>

@@ -28,7 +28,7 @@ router.post('/createUser',async (req, res) => {
    await newUser.save();
 });
 
-router.post('/insertMark', async (req, res) => {
+router.post('/updateMarks', async (req, res) => {
     let userId = req.query.userId;
     let objectId = mongoose.Types.ObjectId(userId);
     user.updateOne({

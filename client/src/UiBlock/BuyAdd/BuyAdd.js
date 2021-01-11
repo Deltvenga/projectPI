@@ -10,6 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
+import Switch from "@material-ui/core/Switch";
 
 export class BuyAddDialog extends Component {
     handleClose = () => {
@@ -45,10 +46,18 @@ export class BuyAddDialog extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            isAuth: false
+            isAuth: false,
+            isUseClickCoords: false,
         }
     }
 
+    changeSlider(event, value) {
+        this.setState({isUseClickCoords: value});
+    }
+
+    handleAdding() {
+        this.props.addBuy(this.state.isUseClickCoords);
+    }
 
     render() {
         return (
@@ -75,10 +84,16 @@ export class BuyAddDialog extends Component {
                                         <MenuItem value={3}>Здоровье</MenuItem>
                                     </Select>
                                 </div>
-
+                        <Switch
+                            checked={this.state.isUseClickCoords}
+                            onChange={this.changeSlider.bind(this)}
+                            color="primary"
+                            name="checkedB"
+                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                        />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.props.addBuy} color="primary">
+                        <Button onClick={this.handleAdding.bind(this)} color="primary">
                             Добавить
                         </Button>
                         <Button onClick={this.handleClose} color="primary">

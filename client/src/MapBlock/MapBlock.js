@@ -4,14 +4,6 @@ import axios from "axios";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 
-class UserMark {
-    constructor(markLocation, markType, markValue) {
-        this.location = markLocation;
-        this.type = markType;
-        this.value = markValue;
-    }
-}
-
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +12,7 @@ export class MapContainer extends Component {
             activeMarker: null,
             showingInfoWindow: true,
         }
+        this.mapClickHandler = this.mapClickHandler.bind(this);
 
     }
 
@@ -47,6 +40,13 @@ export class MapContainer extends Component {
 
     id = 1;
 
+    mapClickHandler(event, map, coord) {
+        const { latLng } = coord;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        this.props.setCurrentClickCoords({lat, lng});
+    }
+
     render() {
         return (
             <Map
@@ -58,6 +58,7 @@ export class MapContainer extends Component {
                         lng: 65.5689476
                     }
                 }
+                onClick = { this.mapClickHandler }
             >
                 {this.props.userMarks && this.props.userMarks.length > 0 && this.props.userMarks.map((mark, index)=> {
                     return (

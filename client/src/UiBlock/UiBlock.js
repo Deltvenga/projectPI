@@ -17,24 +17,12 @@ import Fab from "@material-ui/core/Fab";
 import PersonProfileOpener from "./PersonProfile/PersonProfileOpener";
 import BuyAddDialog from "./BuyAdd/BuyAdd";
 import axios from "axios";
-
-class UserMark {
-    constructor(markLocation, markType, markValue) {
-        this.location = markLocation;
-        this.type = markType;
-        this.value = markValue;
-    }
-}
+import BuyMark from "../MapBlock/BuyMark";
 
 export class UiBlock extends Component {
     constructor(props) {
         super(props);
-        this.userMarks = [new UserMark(
-            {
-                lat: 57.2531122,
-                lng: 65.6689453
-            }, 1, 1000
-        )];
+        this.userMarks = [];
         this.state = {
             isMenuBarOpen: false,
             open: true,
@@ -89,14 +77,15 @@ export class UiBlock extends Component {
         });
     }
 
-    addNewMark() {
-        this.props.userMarks.push(
-            new UserMark({lat: this.state.curPos.lat, lng: this.state.curPos.lng },
+    addNewMark(isUseClickCoords) {
+        let curCoords = isUseClickCoords ? this.props.curClickCoords : this.state.curPos;
+        this.props.addUserMark(
+            new BuyMark(curCoords,
                 this.state.currentBuyType,
                 this.state.currentBuyValue
             )
         );
-        axios.post('http://localhost:3001/insertMark',null, {
+        axios.post('http://localhost:3001/updateMarks',null, {
             params: {
                 userId: '5fd78c514fb6173abed4d1be',
                 userMarks: this.props.userMarks
@@ -133,7 +122,8 @@ export class UiBlock extends Component {
                         setCurrentBuyType={(value) => {this.setState({currentBuyType: value})}}
                         isOpen={this.state.buyAddDialog}
                         closeHandler={() => {this.setState({buyAddDialog: false})}}
-                        addBuy={() => {this.addNewMark()}}
+                        addBuy={(val) => {this.addNewMark(val)}}
+                        curClickPos={this.props.curClickCoords}
                     />
                     <Drawer anchor="bottom" open={this.state.isMenuBarOpen} onClose={this.toggleDrawer()}>
                         <List
