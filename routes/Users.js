@@ -26,7 +26,6 @@ router.post('/createUser',async (req, res) => {
        password: req.query.userPassword,
    });
    await newUser.save();
-   res.redirect('/')
 });
 
 router.post('/insertMark', async (req, res) => {

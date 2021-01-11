@@ -21,12 +21,7 @@ export class App extends Component {
                 lat: 56.2531189,
                 lng: 64.6689470
             },
-            userMarks: [new UserMark(
-                {
-                    lat: 57.2531189,
-                    lng: 65.6689470
-                }, 1, 1000
-            )]
+            userInfo: {}
         }
     }
 
@@ -48,15 +43,22 @@ export class App extends Component {
             data.data[0].marks.forEach((value) => {
                 resultArr.push(JSON.parse(value));
             })
-            this.setState({userMarks: resultArr});
+            data.data[0].marks = resultArr;
+            this.setState({userInfo: data.data[0]});
         })
     }
 
     render() {
         return (
             <div className="App-mapBlock">
-                <MapBlock userMarks={this.state.userMarks} curPos={this.state.curPos}/>
-                <UiBlock updatePosition={(newPos) => {this.updatePosition(newPos)}} userMarks={this.state.userMarks}/>
+                <MapBlock
+                    userMarks={this.state.userInfo.marks || []}
+                    curPos={this.state.curPos}
+                />
+                <UiBlock
+                    updatePosition={(newPos) => {this.updatePosition(newPos)}}
+                    userMarks={this.state.userInfo.marks || []}
+                />
                 <AuthController />
             </div>
         );

@@ -19,36 +19,14 @@ export class MapContainer extends Component {
             selectedPlace: props,
             activeMarker: null,
             showingInfoWindow: true,
-            userMarks: [new UserMark(
-                {
-                    lat: 57.2531,
-                    lng: 65.6689
-                }, 1, 1000
-            )]
         }
 
     }
 
     componentDidMount() {
-        axios.post('http://localhost:3001/getUserInfo', null, {
-            params: {
-                userId: '5fd78c514fb6173abed4d1be',
-            }
-        }).then((data) => {
-            var resultArr = [];
-            data.data[0].marks.forEach((value) => {
-                resultArr.push(JSON.parse(value));
-            })
-            this.setState({userMarks: resultArr});
-        })
+
     }
 
-    onMarkerClick = (props, marker, e) =>
-        this.setState({
-            selectedPlace: props,
-            activeMarker: marker,
-            showingInfoWindow: true
-        });
     styles = {
         infoWindow: {
             height: 100,
@@ -81,7 +59,7 @@ export class MapContainer extends Component {
                     }
                 }
             >
-                {this.state.userMarks.map((mark, index)=> {
+                {this.props.userMarks && this.props.userMarks.length > 0 && this.props.userMarks.map((mark, index)=> {
                     return (
                         <Marker
                             title={this.getMarkCaption(mark)}
