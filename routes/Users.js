@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const user = require('../models/User');
+const mongoose = require('mongoose');
 
 let users = null;
 let currentUser = null;
@@ -13,28 +14,33 @@ router.get('/getAllUsers', (req, res) => {
 });
 
 router.get('/getUserInfo',(req, res) => {
-   user.find({_id: req.body.userId}).then (result => {
+   user.find({_id: req.query.userId}).then (result => {
       res.send(result);
+      console.log(result);
    });
 });
 
 router.post('/createUser',async (req, res) => {
    const newUser = new user({
-       name: req.body.userName,
-       password: req.body.userPassword,
+       name: req.query.userName,
+       password: req.query.userPassword,
    });
    await newUser.save();
    res.redirect('/')
 });
 
-router.post('/insertMark', (req, res) => {
-    user.update({
-        _id: req.query.userId
+router.post('/insertMark', async (req, res) => {
+    let userId = req.query.userId;
+    let objectId = mongoose.Types.ObjectId(userId);
+    user.updateOne({
+        _id: objectId
     }, {
-        icon: 'test',
+        icon: 'testosososos',
         marks: req.query.userMarks
+    }).then(result => {
+        console.log(result);
     });
-    console.log(req.query);
+    console.log(objectId);
 });
 
 
