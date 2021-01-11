@@ -83,10 +83,10 @@ export class MapContainer extends Component {
             >
                 {this.state.userMarks.map((mark, index)=> {
                     return (
-                        <Circle
+                        <Marker
                             title={this.getMarkCaption(mark)}
                             key={index}
-                            center={ {lat: mark.location.lat, lng: mark.location.lng} }
+                            position={ {lat: mark.location.lat, lng: mark.location.lng} }
                             radius={100}
                             options={{
                                 strokeColor: "#66009a",
