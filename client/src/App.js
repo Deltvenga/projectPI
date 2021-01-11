@@ -18,8 +18,8 @@ export class App extends Component {
         super(props);
         this.state = {
             curPos: {
-                lat: 57.2531189,
-                lng: 65.6689470
+                lat: 56.2531189,
+                lng: 64.6689470
             },
             userMarks: [new UserMark(
                 {

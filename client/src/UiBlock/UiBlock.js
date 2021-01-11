@@ -44,8 +44,8 @@ export class UiBlock extends Component {
             currentBuyType: 1,
             currentBuyValue: 0,
             curPos: {
-                lat: 57.2531111,
-                lng: 65.6689430
+                lat: 57.25310,
+                lng: 65.668923
             }
         }
         this.classes = makeStyles((theme) => ({

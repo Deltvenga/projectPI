@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
+import {Map, GoogleApiWrapper, Marker, InfoWindow, Circle} from 'google-maps-react';
 import axios from "axios";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -21,8 +21,8 @@ export class MapContainer extends Component {
             showingInfoWindow: true,
             userMarks: [new UserMark(
                 {
-                    lat: 57.2531111,
-                    lng: 65.6689411
+                    lat: 57.2531,
+                    lng: 65.6689
                 }, 1, 1000
             )]
         }
@@ -81,22 +81,23 @@ export class MapContainer extends Component {
                     }
                 }
             >
-                {this.state.userMarks.map((value, index) => {
-                    return <Marker
-                        title={this.getMarkCaption(value)}
-                        name={'curPos'}
-                        id={this.id++}
-                        position={value.location}
-                    >
-                        <InfoWindow
-                            visible={true}
-                            style={this.styles.infoWindow}
-                        >
-                            <div>
-                                <p>Click on the map or drag the marker to select location where the incident occurred</p>
-                            </div>
-                        </InfoWindow>
-                    </Marker>
+                {this.state.userMarks.map((mark, index)=> {
+                    return (
+                        <Circle
+                            title={this.getMarkCaption(mark)}
+                            key={index}
+                            center={ {lat: mark.location.lat, lng: mark.location.lng} }
+                            radius={100}
+                            options={{
+                                strokeColor: "#66009a",
+                                strokeOpacity: 0.8,
+                                strokeWeight: 2,
+                                fillColor: `#66009a`,
+                                fillOpacity: 0.35,
+                                zIndex: 1
+                            }}
+                        />
+                    )
                 })}
                 <Marker
                     title={'Ваше местоположение'}
