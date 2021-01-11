@@ -9,6 +9,9 @@ export class MapContainer extends Component {
             activeMarker: null,
             showingInfoWindow: true
         }
+        // axios.post('http://localhost:3001/getUserInfo', {userId: 1}).then((data) => {
+        //     console.log(data);
+        // })
     }
     onMarkerClick = (props, marker, e) =>
         this.setState({

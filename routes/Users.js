@@ -29,10 +29,12 @@ router.post('/createUser',async (req, res) => {
 
 router.post('/insertMark', (req, res) => {
     user.update({
-        _id: req.body.userId
+        _id: req.query.userId
     }, {
-        marks: req.body.userMarks
+        icon: 'test',
+        marks: req.query.userMarks
     });
+    console.log(req.query);
 });
 
 

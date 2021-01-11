@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const PORT = process.env.SERVER_PORT || 3001;
 
 const app = new express();
+app.use(cors());
 
 async function start() {
     try {

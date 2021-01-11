@@ -15,15 +15,34 @@ import PersonIcon from '@material-ui/icons/Person';
 import FriendsAddingDialog from "./FriendsAddingDialog/FriendsAddingDialog";
 import Fab from "@material-ui/core/Fab";
 import PersonProfileOpener from "./PersonProfile/PersonProfileOpener";
+import BuyAddDialog from "./BuyAdd/BuyAdd";
+import axios from "axios";
+
+class UserMark {
+    constructor(markLocation, markType, markValue) {
+        this.location = markLocation;
+        this.type = markType;
+        this.value = markValue;
+    }
+}
 
 export class UiBlock extends Component {
     constructor(props) {
         super(props);
+        this.userMarks = [new UserMark(
+            {
+                lat: 57.2531189,
+                lng: 65.6689470
+            }, 1, 1000
+        )];
         this.state = {
             isMenuBarOpen: false,
             open: true,
             openFriendAddingDialog: false,
-            personProfileOpen: false
+            personProfileOpen: false,
+            buyAddDialog: false,
+            currentBuyType: 1,
+            currentBuyValue: 0
         }
         this.classes = makeStyles((theme) => ({
             root: {
@@ -65,6 +84,27 @@ export class UiBlock extends Component {
         });
     }
 
+    addNewMark() {
+        this.props.userMarks.push(
+            new UserMark({lat: this.state.curPos.lat, lng: this.state.curPos.lng },
+                this.state.currentBuyType,
+                this.state.currentBuyValue
+            )
+        );
+        axios.post('http://localhost:3001/insertMark',null, {
+            params: {
+                userId: '5fd78c514fb6173abed4d1be',
+                userMarks: this.userMarks
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+
     render() {
         return (
             <div className="App-uiBlock">
@@ -81,6 +121,15 @@ export class UiBlock extends Component {
                     <FriendsAddingDialog
                         isOpen={this.state.openFriendAddingDialog}
                         closeHandler={() => {this.setState({openFriendAddingDialog: false})}}/>
+                    <BuyAddDialog
+                        currentBuyType={this.state.currentBuyType}
+                        currentBuyValue={this.state.currentBuyValue}
+                        setCurrentBuyValue={(value) => {this.setState({currentBuyValue: value})}}
+                        setCurrentBuyType={(value) => {this.setState({currentBuyType: value})}}
+                        isOpen={this.state.buyAddDialog}
+                        closeHandler={() => {this.setState({buyAddDialog: false})}}
+                        addBuy={() => {this.addNewMark()}}
+                    />
                     <Drawer anchor="bottom" open={this.state.isMenuBarOpen} onClose={this.toggleDrawer()}>
                         <List
                             component="nav"
@@ -115,6 +164,12 @@ export class UiBlock extends Component {
                                     <PersonIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Мой профиль" />
+                            </ListItem>
+                            <ListItem button onClick={() => {this.setState({buyAddDialog: true})}}>
+                                <ListItemIcon>
+                                    <PersonIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Добавить покупку" />
                             </ListItem>
                         </List>
                     </Drawer>
