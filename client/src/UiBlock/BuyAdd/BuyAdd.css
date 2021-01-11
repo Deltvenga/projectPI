@@ -1,0 +1,8 @@
+.BuyAdd-product-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end
+}
+.BuyAdd-product-input {
+    width: 350px;
+}
