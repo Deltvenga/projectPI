@@ -3,6 +3,7 @@ import './App.css';
 import MapBlock from "./MapBlock/MapBlock";
 import UiBlock from "./UiBlock/UiBlock";
 import AuthController from "./AuthController/AuthController";
+import axios from "axios";
 
 class UserMark {
     constructor(markLocation, markType, markValue) {
@@ -16,7 +17,10 @@ export class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            curPos: null,
+            curPos: {
+                lat: 57.2531189,
+                lng: 65.6689470
+            },
             userMarks: [new UserMark(
                 {
                     lat: 57.2531189,
@@ -31,10 +35,24 @@ export class App extends Component {
         console.log(this.state.curPos);
     }
 
+    componentDidMount() {
+        axios.post('http://localhost:3001/getUserInfo', null, {
+            params: {
+                userId: '5fd78c514fb6173abed4d1be',
+            }
+        }).then((data) => {
+            var resultArr = [];
+            data.data[0].marks.forEach((value) => {
+                resultArr.push(JSON.parse(value));
+            })
+            this.setState({userMarks: resultArr});
+        })
+    }
+
     render() {
         return (
             <div className="App-mapBlock">
-                <MapBlock curPos={this.state.curPos}/>
+                <MapBlock userMarks={this.state.userMarks} curPos={this.state.curPos}/>
                 <UiBlock updatePosition={(newPos) => {this.updatePosition(newPos)}} userMarks={this.state.userMarks}/>
                 <AuthController />
             </div>

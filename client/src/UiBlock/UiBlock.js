@@ -31,8 +31,8 @@ export class UiBlock extends Component {
         super(props);
         this.userMarks = [new UserMark(
             {
-                lat: 57.2531189,
-                lng: 65.6689470
+                lat: 57.2531122,
+                lng: 65.6689453
             }, 1, 1000
         )];
         this.state = {
@@ -42,7 +42,11 @@ export class UiBlock extends Component {
             personProfileOpen: false,
             buyAddDialog: false,
             currentBuyType: 1,
-            currentBuyValue: 0
+            currentBuyValue: 0,
+            curPos: {
+                lat: 57.2531111,
+                lng: 65.6689430
+            }
         }
         this.classes = makeStyles((theme) => ({
             root: {
@@ -94,7 +98,7 @@ export class UiBlock extends Component {
         axios.post('http://localhost:3001/insertMark',null, {
             params: {
                 userId: '5fd78c514fb6173abed4d1be',
-                userMarks: this.userMarks
+                userMarks: this.props.userMarks
             }
         })
         .then(function (response) {

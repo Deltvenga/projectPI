@@ -13,7 +13,7 @@ router.get('/getAllUsers', (req, res) => {
     });
 });
 
-router.get('/getUserInfo',(req, res) => {
+router.post('/getUserInfo',(req, res) => {
    user.find({_id: req.query.userId}).then (result => {
       res.send(result);
       console.log(result);
