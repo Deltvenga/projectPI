@@ -83,7 +83,8 @@ export class UiBlock extends Component {
     updateLocationHandler() {
         const self = this;
         navigator.geolocation.getCurrentPosition((position) => {
-            self.setState({curPos: {lat: position.coords.latitude, lng: position.coords.longitude }});
+            self.setState({curPos: {lat: 57.15313,
+                    lng: 65.56891 }});
             this.props.updatePosition(this.state.curPos);
         });
     }

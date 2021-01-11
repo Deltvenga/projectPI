@@ -31,7 +31,10 @@ export class App extends Component {
     }
 
     updatePosition(newPos) {
-        this.setState({curPos: newPos});
+        this.setState({curPos: {
+                lat: 56.25313,
+                lng: 64.66893
+            }});
         console.log(this.state.curPos);
     }
 
