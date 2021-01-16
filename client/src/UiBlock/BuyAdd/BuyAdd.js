@@ -61,7 +61,11 @@ export class BuyAddDialog extends Component {
             category: this.props.currentBuyType,
             sum: this.props.currentBuyValue
         }
-        this.state.buyerList.push(buy);
+        let currBuyList = this.state.buyerList;
+        currBuyList.push(buy);
+        this.setState({ buyerList:currBuyList });
+        console.log(this.state);
+
     }
 
     render() {
