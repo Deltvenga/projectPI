@@ -61,6 +61,7 @@ export class BuyAddDialog extends Component {
             category: this.props.currentBuyType,
             sum: this.props.currentBuyValue
         }
+        // this.props.addBuy(this.state.isUseClickCoords);
         let currBuyList = this.state.buyerList;
         currBuyList.push(buy);
         this.setState({ buyerList:currBuyList });
@@ -91,12 +92,12 @@ export class BuyAddDialog extends Component {
                                 variant="outlined"
                                 color="primary"
                                 onChange={this.handleBuyNameChange}
-                                value={this.props.currentBuyName}
+                                value={this.props.currentBuyName || ''}
                             />
                             <TextField
                                 id="standard-basic"
                                 onChange={this.handlePriceChange}
-                                value={this.props.currentBuyValue} label="Размер траты" />
+                                value={this.props.currentBuyValue || ''} label="Размер траты" />
                             <div>
                                 <InputLabel id="demo-simple-select-label">Категория</InputLabel>
                                 <Select
@@ -115,7 +116,7 @@ export class BuyAddDialog extends Component {
                             </Button>
                         </div>
                         <List>
-                            {this.state.buyerList.forEach((item) => (
+                            {this.state.buyerList.map((item) => (
                                 <ListItem key={item.key}>
                                     <ListItemText primary={item.name}  secondary={item.sum}/>
                                 </ListItem>

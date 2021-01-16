@@ -29,7 +29,9 @@ export class AuthController extends Component {
     }
 
     componentDidMount() {
-        //this.handleOpen();
+        if(!this.props.isAuth) {
+            // this.handleOpen();
+        }
     }
 
     render() {
@@ -57,6 +59,7 @@ export class AuthController extends Component {
                 </Dialog>
                 <RegisterDialog
                     isOpen={this.state.isRegisterOpened}
+                    setUserInfo={this.props.setUserInfo}
                     closeHandler={() => {this.setState({isRegisterOpened: false})}}/>
                 <LoginDialog
                     isOpen={this.state.isLoginOpened}

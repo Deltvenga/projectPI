@@ -38,8 +38,6 @@ export class MapContainer extends Component {
         return this.types[value.type] + " " + value.value
     }
 
-    id = 1;
-
     mapClickHandler(event, map, coord) {
         const { latLng } = coord;
         const lat = latLng.lat();
@@ -103,5 +101,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: process.env.MAP_API_KEY
+    apiKey: 'AIzaSyDo16grl0dpu53GduSWbyIX5vVzo-kMx1I'
 })(MapContainer);

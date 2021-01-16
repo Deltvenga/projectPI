@@ -11,6 +11,9 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Avatar from "@material-ui/core/Avatar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import './RegisterDialog.css';
+import axios from "axios";
+import Fade from "@material-ui/core/Fade";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 
@@ -18,6 +21,26 @@ export class RegisterDialog extends Component {
     handleClose = () => {
         this.props.closeHandler();
     }
+
+    handleChange = (event) => {
+        var newValue = {};
+        newValue[event.target.id] = event.target.value;
+        this.setState({newValue});
+    };
+
+    registerHandler = () => {
+        axios.post('http://localhost:3001/createUser', null, {
+            params: {
+                email: this.state.email,
+                userName: this.state.name,
+                password: this.state.password
+            }
+        }).then((response) => {
+            this.props.setUserInfo(response.data);
+            this.handleClose();
+        })
+    }
+
 
 
     constructor(props) {
@@ -79,7 +102,7 @@ export class RegisterDialog extends Component {
                         <TextField
                             required
                             margin="dense"
-                            id="pass"
+                            id="password"
                             label="Пароль"
                             type="password"
                             fullWidth
@@ -97,9 +120,10 @@ export class RegisterDialog extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Отмена
                         </Button>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.registerHandler} color="primary">
                             Зарегистрироваться
                         </Button>
+
                     </DialogActions>
                 </Dialog>
             </div>

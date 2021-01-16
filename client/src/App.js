@@ -4,14 +4,7 @@ import MapBlock from "./MapBlock/MapBlock";
 import UiBlock from "./UiBlock/UiBlock";
 import AuthController from "./AuthController/AuthController";
 import axios from "axios";
-
-class UserMark {
-    constructor(markLocation, markType, markValue) {
-        this.location = markLocation;
-        this.type = markType;
-        this.value = markValue;
-    }
-}
+import { useCookies } from 'react-cookie';
 
 export class App extends Component {
     constructor(props) {
@@ -22,7 +15,9 @@ export class App extends Component {
                 lng: 64.6689470
             },
             curClickPos: {},
-            userInfo: {}
+            userInfo: {},
+            userId: '',
+            isAuth: false
         }
     }
 
@@ -34,7 +29,8 @@ export class App extends Component {
         console.log(this.state.curPos);
     }
 
-    componentDidMount() {
+    componentWillMount() {
+
         axios.post('http://localhost:3001/getUserInfo', null, {
             params: {
                 userId: '5fd78c514fb6173abed4d1be',
@@ -47,6 +43,10 @@ export class App extends Component {
             data.data[0].marks = resultArr;
             this.setState({userInfo: data.data[0]});
         })
+    }
+
+    setUserInfo(data) {
+        this.setState({userInfo: data});
     }
 
     addUserMark(newMark) {
@@ -69,7 +69,10 @@ export class App extends Component {
                     userMarks={this.state.userInfo.marks}
                     curClickCoords={this.state.curClickPos}
                 />
-                <AuthController />
+                <AuthController
+                    isAuth={this.state.isAuth}
+                    setUserInfo={this.setUserInfo.bind(this)}
+                />
             </div>
         );
     }

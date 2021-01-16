@@ -23,9 +23,13 @@ router.post('/getUserInfo',(req, res) => {
 router.post('/createUser',async (req, res) => {
    const newUser = new user({
        name: req.query.userName,
+       email: req.query.email,
        password: req.query.userPassword,
    });
-   await newUser.save();
+   await newUser.save().then((data) => {
+       console.log(data);
+       res.send(data);
+   });
 });
 
 router.post('/updateMarks', async (req, res) => {
