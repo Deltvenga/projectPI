@@ -118,6 +118,8 @@ export class UiBlock extends Component {
                     <BuyAddDialog
                         currentBuyType={this.state.currentBuyType}
                         currentBuyValue={this.state.currentBuyValue}
+                        currentBuyName={this.state.currentBuyName}
+                        setCurrentBuyName={(value) => {this.setState({currentBuyName: value})}}
                         setCurrentBuyValue={(value) => {this.setState({currentBuyValue: value})}}
                         setCurrentBuyType={(value) => {this.setState({currentBuyType: value})}}
                         isOpen={this.state.buyAddDialog}

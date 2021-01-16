@@ -14,8 +14,6 @@ import Switch from "@material-ui/core/Switch";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {IconButton} from "@material-ui/core";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 export class BuyAddDialog extends Component {
     handleClose = () => {
@@ -34,12 +32,17 @@ export class BuyAddDialog extends Component {
         this.props.setCurrentBuyValue(event.target.value);
     }
 
+    handleBuyNameChange = (event) => {
+        this.props.setCurrentBuyName(event.target.value);
+    }
+
     constructor(props) {
         super(props);
         this.state = {
             isOpen: false,
             isAuth: false,
             isUseClickCoords: false,
+            buyerList:[]
         }
     }
 
@@ -49,6 +52,16 @@ export class BuyAddDialog extends Component {
 
     handleAdding() {
         this.props.addBuy(this.state.isUseClickCoords);
+    }
+
+    addNewBuy() {
+        let buy = {
+            key: this.state.buyerList.length + 1,
+            name: this.props.currentBuyName,
+            category: this.props.currentBuyType,
+            sum: this.props.currentBuyValue
+        }
+        this.state.buyerList.push(buy);
     }
 
     render() {
@@ -66,13 +79,15 @@ export class BuyAddDialog extends Component {
                         <DialogContentText>
                             Введите информацию о расходах
                         </DialogContentText>
-                        <div class='BuyAdd-product-container'>
+                        <div className='BuyAdd-product-container'>
                             <TextField
                                 placeholder="Наименование"
                                 inputProps={{ 'aria-label': 'description' }}
                                 className='BuyAdd-product-input'
                                 variant="outlined"
                                 color="primary"
+                                onChange={this.handleBuyNameChange}
+                                value={this.props.currentBuyName}
                             />
                             <TextField
                                 id="standard-basic"
@@ -86,19 +101,19 @@ export class BuyAddDialog extends Component {
                                     value={this.props.currentBuyType}
                                     onChange={this.handleChange}
                                 >
-                                    <MenuItem value={1}>Домашние расходы</MenuItem>
-                                    <MenuItem value={2}>Развлечения</MenuItem>
-                                    <MenuItem value={3}>Здоровье</MenuItem>
+                                    <MenuItem value={'home'}>Домашние расходы</MenuItem>
+                                    <MenuItem value={'entertainment'}>Развлечения</MenuItem>
+                                    <MenuItem value={'health'}>Здоровье</MenuItem>
                                 </Select>
                             </div>
-                            <IconButton aria-label="delete" disabled color="primary">
-                                <AddCircleIcon fontSize="large"/>
-                            </IconButton>
+                            <Button onClick={this.addNewBuy.bind(this)} color="primary">
+                                Добавить
+                            </Button>
                         </div>
                         <List>
-                            {[0, 1, 2].map((item) => (
-                                <ListItem key={item}>
-                                    <ListItemText primary={'Молоко'} />
+                            {this.state.buyerList.forEach((item) => (
+                                <ListItem key={item.key}>
+                                    <ListItemText primary={item.name}  secondary={item.sum}/>
                                 </ListItem>
                             ))}
                         </List>
@@ -111,7 +126,7 @@ export class BuyAddDialog extends Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleAdding.bind(this)} color="primary">
+                        <Button onClick={this.addNewBuy.bind(this)} color="primary">
                             Добавить
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
