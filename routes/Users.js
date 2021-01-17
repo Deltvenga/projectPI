@@ -42,9 +42,71 @@ router.post('/updateMarks', async (req, res) => {
         marks: req.query.userMarks
     }).then(result => {
         console.log(result);
+        res.send('Mark update');
     });
     console.log(objectId);
 });
+
+router.post('/getStatistic', async(req,res) => {
+    let statistic = {
+        january: [],
+        february:[],
+        march:[],
+        april:[],
+        may:[],
+        june:[],
+        july:[],
+        august:[],
+        september:[],
+        october:[],
+        november:[],
+        december:[]
+    }
+    user.find({_id: req.query.userId}).then (result => {
+        result.marks.forEach((value) => {
+            let mark = JSON.parse(value);
+            switch (mark.date.getMonth()) {
+                case 0:
+                    statistic.january.push(mark);
+                    break;
+                case 1:
+                    statistic.february.push(mark);
+                    break;
+                case 2:
+                    statistic.march.push(mark);
+                    break;
+                case 3:
+                    statistic.april.push(mark);
+                    break;
+                case 4:
+                    statistic.may.push(mark);
+                    break;
+                case 5:
+                    statistic.june.push(mark);
+                    break;
+                case 6:
+                    statistic.july.push(mark);
+                    break;
+                case 7:
+                    statistic.august.push(mark);
+                    break;
+                case 8:
+                    statistic.september.push(mark);
+                    break;
+                case 9:
+                    statistic.october.push(mark);
+                    break;
+                case 10:
+                    statistic.november.push(mark);
+                    break;
+                case 11:
+                    statistic.december.push(mark);
+                    break;
+            }
+        });
+        res.send(statistic);
+    });
+})
 
 
 module.exports = router;

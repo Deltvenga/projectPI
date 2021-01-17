@@ -3,5 +3,6 @@ export default class BuyMark {
         this.location = markLocation;
         this.type = markType;
         this.value = markValue;
+        this.date = new Date();
     }
 }
