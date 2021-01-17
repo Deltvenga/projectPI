@@ -12,6 +12,12 @@ const UserSchema = new mongoose.Schema({
     },
     marks: {
         type: Array
+    },
+    email: {
+        type: String
+    },
+    emailConfirmed: {
+        type: Boolean
     }
 });
 module.exports = mongoose.model('user', UserSchema);

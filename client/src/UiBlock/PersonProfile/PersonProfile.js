@@ -5,6 +5,8 @@ import {Container} from "@material-ui/core";
 import './PersonProfile.css';
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
 
 
 export class PersonProfile extends Component {
@@ -27,15 +29,18 @@ export class PersonProfile extends Component {
     render() {
         return (
             <div>
-
                 <Paper elevation={3} className="App-uiBlock__PersonProfile-Container">
                     <Container>
                         <Avatar className="App-uiBlock__PersonProfile-ava" alt="Remy Sharp" src="/avas/ava.jpg"  />
                     </Container>
                     <div className="App-uiBlock__PersonProfile-NameBlock">
                         <Typography variant="h6" gutterBottom>
-                            Here is your name!
+                            Привет, {this.props.userInfo.name}
                         </Typography>
+                        {this.props.emailConfirmed ? "Твоя почта подтверждена" : "Почта не подтверждена"}
+                            <Button onClick={this.props.deAuth} color="primary">
+                                Выйти
+                            </Button>
                     </div>
                 </Paper>
             </div>

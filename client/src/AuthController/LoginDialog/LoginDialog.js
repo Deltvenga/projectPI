@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // import { useCookies } from 'react-cookie';
 import TextField from "@material-ui/core/TextField";
+import axios from "axios";
 
 export class LoginDialog extends Component {
     handleClose = () => {
@@ -17,10 +18,33 @@ export class LoginDialog extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            isAuth: false
+            isAuth: false,
+            email: '',
+            password: ''
         }
     }
 
+    handleLogin = () => {
+        axios.post('http://localhost:3001/loginUser', null, {
+            params: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        }).then((answer) => {
+            if(!answer.data.error) {
+                this.props.setUserInfo(answer.data);
+                this.handleClose();
+            } else {
+                alert(answer.data.error);
+            }
+        })
+    }
+
+    handleChange = (event) => {
+        var result = {};
+        result[event.target.id] = event.target.value;
+        this.setState(result);
+    }
 
     render() {
         return (
@@ -38,21 +62,23 @@ export class LoginDialog extends Component {
                             label="E-mail"
                             type="email"
                             fullWidth
+                            onChange={this.handleChange}
                         />
                         <TextField
                             required
                             margin="dense"
-                            id="pass"
+                            id="password"
                             label="Пароль"
                             type="password"
                             fullWidth
+                            onChange={this.handleChange}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
                             Отмена
                         </Button>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleLogin} color="primary">
                             Войти
                         </Button>
                     </DialogActions>

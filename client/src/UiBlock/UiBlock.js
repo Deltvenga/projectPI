@@ -18,6 +18,9 @@ import PersonProfileOpener from "./PersonProfile/PersonProfileOpener";
 import BuyAddDialog from "./BuyAdd/BuyAdd";
 import axios from "axios";
 import BuyMark from "../MapBlock/BuyMark";
+import {Stats} from "./Stats/Stats";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 export class UiBlock extends Component {
     constructor(props) {
@@ -28,6 +31,7 @@ export class UiBlock extends Component {
             open: true,
             openFriendAddingDialog: false,
             personProfileOpen: false,
+            statsDialog: false,
             buyAddDialog: false,
             currentBuyType: 1,
             currentBuyValue: 0,
@@ -46,6 +50,7 @@ export class UiBlock extends Component {
                 paddingLeft: theme.spacing(4),
             },
         }));
+        this.deAuthAndClose = this.deAuthAndClose.bind(this);
     }
 
 
@@ -99,6 +104,13 @@ export class UiBlock extends Component {
         })
     }
 
+    deAuthAndClose() {
+        this.closeProfilePerson();
+        this.setState({isMenuBarOpen: false});
+        this.props.deAuth();
+
+    }
+
     render() {
         return (
             <div className="App-uiBlock">
@@ -127,6 +139,10 @@ export class UiBlock extends Component {
                         addBuy={(val) => {this.addNewMark(val)}}
                         curClickPos={this.props.curClickCoords}
                     />
+                    <Stats
+                        isOpen={this.state.statsDialog}
+                        closeHandler={() => {this.setState({statsDialog: false})}}
+                    />
                     <Drawer anchor="bottom" open={this.state.isMenuBarOpen} onClose={this.toggleDrawer()}>
                         <List
                             component="nav"
@@ -138,18 +154,18 @@ export class UiBlock extends Component {
                             }
                             className={this.classes.root}
                         >
-                            <ListItem button onClick={() => {this.setState({openFriendAddingDialog: true})}}>
-                                <ListItemIcon>
-                                    <AddCircleOutlineIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Добавить друга" />
-                            </ListItem>
-                            <ListItem button onClick={() => {this.handleMenuClick('FindFriends')}}>
-                                <ListItemIcon>
-                                    <SearchIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Найти друзей" />
-                            </ListItem>
+                            {/*<ListItem button onClick={() => {this.setState({openFriendAddingDialog: true})}}>*/}
+                            {/*    <ListItemIcon>*/}
+                            {/*        <AddCircleOutlineIcon />*/}
+                            {/*    </ListItemIcon>*/}
+                            {/*    <ListItemText primary="Добавить друга" />*/}
+                            {/*</ListItem>*/}
+                            {/*<ListItem button onClick={() => {this.handleMenuClick('FindFriends')}}>*/}
+                            {/*    <ListItemIcon>*/}
+                            {/*        <SearchIcon />*/}
+                            {/*    </ListItemIcon>*/}
+                            {/*    <ListItemText primary="Найти друзей" />*/}
+                            {/*</ListItem>*/}
                             <ListItem button onClick={() => {this.updateLocationHandler()}}>
                                 <ListItemIcon>
                                     <AutorenewIcon />
@@ -164,14 +180,24 @@ export class UiBlock extends Component {
                             </ListItem>
                             <ListItem button onClick={() => {this.setState({buyAddDialog: true})}}>
                                 <ListItemIcon>
-                                    <PersonIcon />
+                                    <ShoppingCartIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Добавить покупку" />
+                            </ListItem>
+                            <ListItem button onClick={() => {this.setState({statsDialog: true})}}>
+                                <ListItemIcon>
+                                    <EqualizerIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Анализ трат" />
                             </ListItem>
                         </List>
                     </Drawer>
                 </div>
-                <PersonProfileOpener open={this.state.personProfileOpen} close={() => {this.closeProfilePerson()}} />
+                <PersonProfileOpener
+                    userInfo={this.props.userInfo}
+                    open={this.state.personProfileOpen}
+                    deAuth={this.deAuthAndClose}
+                    close={() => {this.closeProfilePerson()}} />
             </div>
         );
     }

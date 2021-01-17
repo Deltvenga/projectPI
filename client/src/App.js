@@ -4,7 +4,7 @@ import MapBlock from "./MapBlock/MapBlock";
 import UiBlock from "./UiBlock/UiBlock";
 import AuthController from "./AuthController/AuthController";
 import axios from "axios";
-import { useCookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 
 export class App extends Component {
     constructor(props) {
@@ -16,9 +16,13 @@ export class App extends Component {
             },
             curClickPos: {},
             userInfo: {},
-            userId: '',
-            isAuth: false
+            userId: ''
         }
+        this.cookies = new Cookies();
+        this.state.userId = this.cookies.get('userId');
+        this.state.isAuth = !!this.state.userId;
+        this.deAuth = this.deAuth.bind(this);
+
     }
 
     updatePosition(newPos) {
@@ -29,11 +33,10 @@ export class App extends Component {
         console.log(this.state.curPos);
     }
 
-    componentWillMount() {
-
+    loadUserData() {
         axios.post('http://localhost:3001/getUserInfo', null, {
             params: {
-                userId: '5fd78c514fb6173abed4d1be',
+                userId: this.state.userId,
             }
         }).then((data) => {
             var resultArr = [];
@@ -45,8 +48,17 @@ export class App extends Component {
         })
     }
 
+    componentWillMount() {
+
+        if(this.state.isAuth) {
+            this.loadUserData();
+        }
+    }
+
     setUserInfo(data) {
-        this.setState({userInfo: data});
+        this.setState({userInfo: data, isAuth: true, userId: data._id});
+        this.cookies.set('userId', data._id, { path: '/' });
+
     }
 
     addUserMark(newMark) {
@@ -54,6 +66,12 @@ export class App extends Component {
         newUserInfoState.marks.push(newMark)
         this.setState({userInfo: Object.assign({}, newUserInfoState)});
     }
+
+    deAuth() {
+        this.cookies.remove('userId');
+        this.setState({userInfo: {}, isAuth: false});
+    }
+
 
     render() {
         return (
@@ -68,6 +86,8 @@ export class App extends Component {
                     addUserMark={(newMark) => {this.addUserMark(newMark)}}
                     userMarks={this.state.userInfo.marks}
                     curClickCoords={this.state.curClickPos}
+                    userInfo={this.state.userInfo}
+                    deAuth={this.deAuth}
                 />
                 <AuthController
                     isAuth={this.state.isAuth}

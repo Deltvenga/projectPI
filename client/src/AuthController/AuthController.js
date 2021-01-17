@@ -5,10 +5,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { useCookies } from 'react-cookie';
 import RegisterDialog from "./RegisterDialog/RegisterDialog";
 import LoginDialog from "./LoginDialog/LoginDialog";
-
 export class AuthController extends Component {
     handleClose = () => {
         this.setState({mainDialogOpen: false});
@@ -30,7 +28,7 @@ export class AuthController extends Component {
 
     componentDidMount() {
         if(!this.props.isAuth) {
-            // this.handleOpen();
+            this.handleOpen();
         }
     }
 
@@ -38,7 +36,7 @@ export class AuthController extends Component {
         return (
             <div>
                 <Dialog
-                    open={this.state.mainDialogOpen}
+                    open={!this.props.isAuth && this.state.mainDialogOpen}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -63,6 +61,7 @@ export class AuthController extends Component {
                     closeHandler={() => {this.setState({isRegisterOpened: false})}}/>
                 <LoginDialog
                     isOpen={this.state.isLoginOpened}
+                    setUserInfo={this.props.setUserInfo}
                     closeHandler={() => {this.setState({isLoginOpened: false})}}/>
             </div>
         );

@@ -17,7 +17,10 @@ export class PersonProfileOpener extends Component {
             <div>
                 <Dialog open={this.props.open}>
                     <DialogContent>
-                        <PersonProfile />
+                        <PersonProfile
+                            userInfo={this.props.userInfo}
+                            deAuth={this.props.deAuth}
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">

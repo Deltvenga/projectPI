@@ -14,35 +14,12 @@ import './RegisterDialog.css';
 import axios from "axios";
 import Fade from "@material-ui/core/Fade";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 
 
 export class RegisterDialog extends Component {
-    handleClose = () => {
-        this.props.closeHandler();
-    }
-
-    handleChange = (event) => {
-        var newValue = {};
-        newValue[event.target.id] = event.target.value;
-        this.setState({newValue});
-    };
-
-    registerHandler = () => {
-        axios.post('http://localhost:3001/createUser', null, {
-            params: {
-                email: this.state.email,
-                userName: this.state.name,
-                password: this.state.password
-            }
-        }).then((response) => {
-            this.props.setUserInfo(response.data);
-            this.handleClose();
-        })
-    }
-
-
-
     constructor(props) {
         super(props);
         this.classes = makeStyles((theme) => ({
@@ -57,12 +34,34 @@ export class RegisterDialog extends Component {
         }));
         this.state = {
             isOpen: false,
-            isAuth: false
+            isAuth: false,
+            isEmailSend: false
         }
-
-
     }
 
+    handleClose = () => {
+        this.props.closeHandler();
+    }
+
+    handleChange = (event) => {
+        var newValue = {};
+        newValue[event.target.id] = event.target.value;
+        this.setState(newValue);
+    };
+
+    registerHandler = () => {
+        axios.post('http://localhost:3001/createUser', null, {
+            params: {
+                email: this.state.email,
+                userName: this.state.name,
+                userPassword: this.state.password
+            }
+        }).then((response) => {
+            this.props.setUserInfo(response.data);
+            this.setState({isEmailSend: true})
+            this.handleClose();
+        })
+    }
 
     render() {
         return (
@@ -90,6 +89,7 @@ export class RegisterDialog extends Component {
                             label="Имя"
                             type="name"
                             fullWidth
+                            onChange={this.handleChange}
                         />
                         <TextField
                             required
@@ -98,6 +98,7 @@ export class RegisterDialog extends Component {
                             label="E-mail"
                             type="email"
                             fullWidth
+                            onChange={this.handleChange}
                         />
                         <TextField
                             required
@@ -106,6 +107,7 @@ export class RegisterDialog extends Component {
                             label="Пароль"
                             type="password"
                             fullWidth
+                            onChange={this.handleChange}
                         />
                         <TextField
                             required
@@ -126,6 +128,15 @@ export class RegisterDialog extends Component {
 
                     </DialogActions>
                 </Dialog>
+                <Snackbar
+                    open={this.state.isEmailSend}
+                    autoHideDuration={6000}
+                    onClose={()=> {this.setState({isEmailSend: false})}}
+                >
+                    <Alert onClose={()=> {this.setState({isEmailSend: false})}} severity="success">
+                        Вы успешно зарегистрировались! Вам отправлено письмо подтверждения на почту!
+                    </Alert>
+                </Snackbar>
             </div>
         );
     }

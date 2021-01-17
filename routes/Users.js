@@ -20,12 +20,26 @@ router.post('/getUserInfo',(req, res) => {
    });
 });
 
+router.post('/loginUser',(req, res) => {
+    console.log(req.query);
+    user.find({email: req.query.email}).then (result => {
+        console.log(result);
+        if(result[0].password !== req.query.password) {
+            res.send({error: "Wrong password"});
+        } else {
+            res.send(result[0]);
+        }
+    });
+});
+
 router.post('/createUser',async (req, res) => {
    const newUser = new user({
        name: req.query.userName,
        email: req.query.email,
        password: req.query.userPassword,
+       emailConfirmed: false
    });
+   console.log(req.query);
    await newUser.save().then((data) => {
        console.log(data);
        res.send(data);
