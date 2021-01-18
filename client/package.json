@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "@material-ui/data-grid": "^4.0.0-alpha.17",
     "@material-ui/icons": "^4.9.1"
   }
 }

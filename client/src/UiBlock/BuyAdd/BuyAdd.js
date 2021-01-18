@@ -135,10 +135,10 @@ export class BuyAddDialog extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleAdding.bind(this)} color="primary">
-                            Добавить
+                            Добавить покупки
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
-                            Закрыть
+                            Отмена
                         </Button>
                     </DialogActions>
                 </Dialog>

@@ -76,8 +76,8 @@ export class UiBlock extends Component {
     updateLocationHandler() {
         const self = this;
         navigator.geolocation.getCurrentPosition((position) => {
-            self.setState({curPos: {lat: 57.15313,
-                    lng: 65.56891 }});
+            self.setState({curPos: {lat: position.coords.latitude,
+                    lng: position.coords.longitude }});
             this.props.updatePosition(this.state.curPos);
         });
     }
@@ -137,6 +137,7 @@ export class UiBlock extends Component {
                         curClickPos={this.props.curClickCoords}
                     />
                     <Stats
+                        userInfo={this.props.userInfo}
                         isOpen={this.state.statsDialog}
                         closeHandler={() => {this.setState({statsDialog: false})}}
                     />
@@ -185,7 +186,7 @@ export class UiBlock extends Component {
                                 <ListItemIcon>
                                     <EqualizerIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Анализ трат" />
+                                <ListItemText primary="Статистика покупок" />
                             </ListItem>
                         </List>
                     </Drawer>
