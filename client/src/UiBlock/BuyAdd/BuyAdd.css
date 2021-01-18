@@ -1,8 +1,12 @@
 .BuyAdd-product-container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end
+    align-items: flex-end;
+    flex-wrap: wrap;
 }
 .BuyAdd-product-input {
     width: 350px;
+}
+.BuyAdd-product-categoryBlock {
+    width: 150px;
 }

@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 export class BuyAddDialog extends Component {
+
     handleClose = () => {
         this.props.closeHandler();
     }
@@ -52,6 +53,7 @@ export class BuyAddDialog extends Component {
 
     handleAdding() {
         this.props.addBuy(this.state.isUseClickCoords, this.state.buyerList);
+        this.setState({buyerList:[]})
         this.props.closeHandler();
     }
 
@@ -66,8 +68,9 @@ export class BuyAddDialog extends Component {
         let currBuyList = this.state.buyerList;
         currBuyList.push(buy);
         this.setState({ buyerList:currBuyList });
-        console.log(this.state);
-
+        this.props.setCurrentBuyName('');
+        this.props.setCurrentBuyType('');
+        this.props.setCurrentBuyValue('');
     }
 
     render() {
@@ -102,9 +105,10 @@ export class BuyAddDialog extends Component {
                             <div>
                                 <InputLabel id="demo-simple-select-label">Категория</InputLabel>
                                 <Select
+                                    value={this.props.currentBuyType}
+                                    className='BuyAdd-product-categoryBlock'
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={this.props.currentBuyType}
                                     onChange={this.handleChange}
                                 >
                                     <MenuItem value={'home'}>Домашние расходы</MenuItem>
@@ -132,6 +136,7 @@ export class BuyAddDialog extends Component {
                             name="checkedB"
                             inputProps={{ 'aria-label': 'primary checkbox' }}
                         />
+                        <label>Установка по клику</label>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleAdding.bind(this)} color="primary">

@@ -182,7 +182,11 @@ export class UiBlock extends Component {
                                 </ListItemIcon>
                                 <ListItemText primary="Добавить покупку" />
                             </ListItem>
-                            <ListItem button onClick={() => {this.setState({statsDialog: true})}}>
+                            <ListItem button onClick={() => {
+                                this.setState({
+                                    statsDialog: true,
+                                    currentBuyType: 'home'
+                                })}}>
                                 <ListItemIcon>
                                     <EqualizerIcon />
                                 </ListItemIcon>
