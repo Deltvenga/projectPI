@@ -32,6 +32,13 @@ export class LoginDialog extends Component {
             }
         }).then((answer) => {
             if(!answer.data.error) {
+
+                // баг, когда приходят в марках строки нераспарщенные
+                if(typeof answer.data.marks[0] === 'string') {
+                    answer.data.marks = answer.data.marks.map((item) => {
+                        return JSON.parse(item)
+                    });
+                }
                 this.props.setUserInfo(answer.data);
                 this.handleClose();
             } else {

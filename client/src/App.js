@@ -45,7 +45,7 @@ export class App extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         if(this.state.isAuth) {
             this.loadUserData();

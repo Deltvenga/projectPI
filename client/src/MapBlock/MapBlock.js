@@ -38,13 +38,6 @@ export class MapContainer extends Component {
         return this.types[value.type] + " " + value.value
     }
 
-    getMarkPosition(marker) {
-        const location = JSON.parse(marker).location;
-        return {
-            lat: location.lat,
-            lng: location.lng
-        }
-    }
 
     mapClickHandler(event, map, coord) {
         const { latLng } = coord;
@@ -71,7 +64,7 @@ export class MapContainer extends Component {
                         <Marker
                             title={this.getMarkCaption(mark)}
                             key={index}
-                            position={ this.getMarkPosition(mark) }
+                            position={ {lat: mark.location.lat, lng: mark.location.lng} }
                             radius={100}
                             options={{
                                 strokeColor: "#66009a",
