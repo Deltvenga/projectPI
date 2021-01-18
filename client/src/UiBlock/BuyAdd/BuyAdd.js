@@ -51,7 +51,8 @@ export class BuyAddDialog extends Component {
     }
 
     handleAdding() {
-        this.props.addBuy(this.state.isUseClickCoords);
+        this.props.addBuy(this.state.isUseClickCoords, this.state.buyerList);
+        this.props.closeHandler();
     }
 
     addNewBuy() {
@@ -61,7 +62,7 @@ export class BuyAddDialog extends Component {
             category: this.props.currentBuyType,
             sum: this.props.currentBuyValue
         }
-        // this.props.addBuy(this.state.isUseClickCoords);
+        //this.props.addBuy(this.state.isUseClickCoords);
         let currBuyList = this.state.buyerList;
         currBuyList.push(buy);
         this.setState({ buyerList:currBuyList });
@@ -109,6 +110,8 @@ export class BuyAddDialog extends Component {
                                     <MenuItem value={'home'}>Домашние расходы</MenuItem>
                                     <MenuItem value={'entertainment'}>Развлечения</MenuItem>
                                     <MenuItem value={'health'}>Здоровье</MenuItem>
+                                    <MenuItem value={'gifts'}>Подарки</MenuItem>
+                                    <MenuItem value={'education'}>Образование</MenuItem>
                                 </Select>
                             </div>
                             <Button onClick={this.addNewBuy.bind(this)} color="primary">
@@ -118,7 +121,7 @@ export class BuyAddDialog extends Component {
                         <List>
                             {this.state.buyerList.map((item) => (
                                 <ListItem key={item.key}>
-                                    <ListItemText primary={item.name}  secondary={item.sum}/>
+                                    <ListItemText primary={item.name}  secondary={item.sum + 'руб.'}/>
                                 </ListItem>
                             ))}
                         </List>
@@ -131,7 +134,7 @@ export class BuyAddDialog extends Component {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.addNewBuy.bind(this)} color="primary">
+                        <Button onClick={this.handleAdding.bind(this)} color="primary">
                             Добавить
                         </Button>
                         <Button onClick={this.handleClose} color="primary">

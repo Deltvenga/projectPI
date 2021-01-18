@@ -63,7 +63,7 @@ export class App extends Component {
 
     addUserMark(newMark) {
         var newUserInfoState = this.state.userInfo;
-        newUserInfoState.marks.push(newMark)
+        newUserInfoState.marks.push(newMark);
         this.setState({userInfo: Object.assign({}, newUserInfoState)});
     }
 
@@ -87,6 +87,7 @@ export class App extends Component {
                     userMarks={this.state.userInfo.marks}
                     curClickCoords={this.state.curClickPos}
                     userInfo={this.state.userInfo}
+                    userId={this.state.userId}
                     deAuth={this.deAuth}
                 />
                 <AuthController

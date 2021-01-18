@@ -82,17 +82,14 @@ export class UiBlock extends Component {
         });
     }
 
-    addNewMark(isUseClickCoords) {
+    addNewMark(isUseClickCoords, buyerList) {
         let curCoords = isUseClickCoords ? this.props.curClickCoords : this.state.curPos;
         this.props.addUserMark(
-            new BuyMark(curCoords,
-                this.state.currentBuyType,
-                this.state.currentBuyValue
-            )
+            new BuyMark(curCoords, buyerList)
         );
         axios.post('http://localhost:3001/updateMarks',null, {
             params: {
-                userId: '5fd78c514fb6173abed4d1be',
+                userId: this.props.userId,
                 userMarks: this.props.userMarks
             }
         })
@@ -136,7 +133,7 @@ export class UiBlock extends Component {
                         setCurrentBuyType={(value) => {this.setState({currentBuyType: value})}}
                         isOpen={this.state.buyAddDialog}
                         closeHandler={() => {this.setState({buyAddDialog: false})}}
-                        addBuy={(val) => {this.addNewMark(val)}}
+                        addBuy={(val, val2) => {this.addNewMark(val, val2)}}
                         curClickPos={this.props.curClickCoords}
                     />
                     <Stats

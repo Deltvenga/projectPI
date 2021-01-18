@@ -1,8 +1,7 @@
 export default class BuyMark {
-    constructor(markLocation, markType, markValue) {
+    constructor(markLocation, markBuyerList) {
         this.location = markLocation;
-        this.type = markType;
-        this.value = markValue;
         this.date = new Date();
+        this.buyerList = markBuyerList;
     }
 }
